@@ -1,0 +1,269 @@
+version: 2
+
+sources:
+  - name: classic_models
+    database: sandbox
+    schema: classic_models
+    tables:
+      - name: customers
+        columns:
+          - name: customer_number
+            data_type: number
+          - name: customer_name
+            data_type: text
+          - name: customer_last_name
+            data_type: text
+          - name: customer_first_name
+            data_type: text
+          - name: phone
+            data_type: text
+          - name: address_line1
+            data_type: text
+          - name: address_line2
+            data_type: text
+          - name: city
+            data_type: text
+          - name: state
+            data_type: text
+          - name: postal_code
+            data_type: text
+          - name: country
+            data_type: text
+          - name: sales_rep_employee_number
+            data_type: number
+          - name: credit_limit
+            data_type: float
+          - name: _sync_date
+            data_type: timestamp_ltz
+          - name: customer_email
+            data_type: text
+
+      - name: employees
+        columns:
+          - name: employee_number
+            data_type: number
+          - name: last_name
+            data_type: text
+          - name: first_name
+            data_type: text
+          - name: extension
+            data_type: text
+          - name: email
+            data_type: text
+          - name: office_code
+            data_type: text
+          - name: reports_to
+            data_type: number
+          - name: job_title
+            data_type: text
+          - name: _sync_date
+            data_type: timestamp_ltz
+
+      - name: inventory_transactions
+        columns:
+          - name: transaction_id
+            data_type: number
+          - name: product_code
+            data_type: text
+          - name: warehouse_code
+            data_type: text
+          - name: transaction_type
+            data_type: text
+          - name: quantity
+            data_type: number
+          - name: transaction_date
+            data_type: date
+          - name: reference_id
+            data_type: text
+          - name: _sync_date
+            data_type: timestamp_ltz
+
+      - name: offices
+        columns:
+          - name: office_code
+            data_type: text
+          - name: city
+            data_type: text
+          - name: phone
+            data_type: text
+          - name: address_line1
+            data_type: text
+          - name: address_line2
+            data_type: text
+          - name: state
+            data_type: text
+          - name: country
+            data_type: text
+          - name: postal_code
+            data_type: text
+          - name: territory
+            data_type: text
+          - name: _sync_date
+            data_type: timestamp_ltz
+
+      - name: orders
+        columns:
+          - name: order_number
+            data_type: number
+          - name: order_date
+            data_type: date
+          - name: required_date
+            data_type: date
+          - name: shipped_date
+            data_type: date
+          - name: status
+            data_type: text
+          - name: comments
+            data_type: text
+          - name: customer_number
+            data_type: number
+          - name: _sync_date
+            data_type: timestamp_ltz
+
+      - name: order_details
+        columns:
+          - name: order_number
+            data_type: number
+          - name: product_code
+            data_type: text
+          - name: quantity_ordered
+            data_type: number
+          - name: price_each
+            data_type: float
+          - name: order_line_number
+            data_type: number
+          - name: _sync_date
+            data_type: timestamp_ltz
+
+      - name: payments
+        columns:
+          - name: customer_number
+            data_type: number
+          - name: check_number
+            data_type: text
+          - name: payment_date
+            data_type: date
+          - name: amount
+            data_type: float
+          - name: _sync_date
+            data_type: timestamp_ltz
+
+      - name: products
+        columns:
+          - name: product_code
+            data_type: text
+          - name: product_name
+            data_type: text
+          - name: product_line
+            data_type: text
+          - name: product_scale
+            data_type: text
+          - name: product_vendor
+            data_type: text
+          - name: product_description
+            data_type: text
+          - name: quantity_in_stock
+            data_type: number
+          - name: buy_price
+            data_type: float
+          - name: msrp
+            data_type: float
+          - name: _sync_date
+            data_type: timestamp_ltz
+
+      - name: product_lines
+        columns:
+          - name: product_line
+            data_type: text
+          - name: text_description
+            data_type: text
+          - name: html_description
+            data_type: text
+          - name: image
+            data_type: binary
+          - name: _sync_date
+            data_type: timestamp_ltz
+
+      - name: promotions
+        columns:
+          - name: promotion_id
+            data_type: number
+          - name: promotion_name
+            data_type: text
+          - name: product_line
+            data_type: text
+          - name: discount_pct
+            data_type: float
+          - name: start_date
+            data_type: date
+          - name: end_date
+            data_type: date
+          - name: description
+            data_type: text
+          - name: _sync_date
+            data_type: timestamp_ltz
+
+      - name: returns
+        columns:
+          - name: return_id
+            data_type: number
+          - name: order_number
+            data_type: number
+          - name: product_code
+            data_type: text
+          - name: quantity_returned
+            data_type: number
+          - name: return_date
+            data_type: date
+          - name: reason
+            data_type: text
+          - name: refund_amount
+            data_type: float
+          - name: status
+            data_type: text
+          - name: _sync_date
+            data_type: timestamp_ltz
+
+      - name: shipments
+        columns:
+          - name: shipment_id
+            data_type: number
+          - name: order_number
+            data_type: number
+          - name: warehouse_code
+            data_type: text
+          - name: carrier
+            data_type: text
+          - name: tracking_number
+            data_type: text
+          - name: ship_date
+            data_type: date
+          - name: estimated_delivery_date
+            data_type: date
+          - name: actual_delivery_date
+            data_type: date
+          - name: shipping_cost
+            data_type: float
+          - name: _sync_date
+            data_type: timestamp_ltz
+
+      - name: warehouses
+        columns:
+          - name: warehouse_code
+            data_type: text
+          - name: warehouse_name
+            data_type: text
+          - name: address_line1
+            data_type: text
+          - name: city
+            data_type: text
+          - name: state
+            data_type: text
+          - name: country
+            data_type: text
+          - name: postal_code
+            data_type: text
+          - name: capacity
+            data_type: number
+          - name: _sync_date
+            data_type: timestamp_ltz
