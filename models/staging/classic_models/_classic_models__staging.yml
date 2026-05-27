@@ -1,0 +1,72 @@
+version: 2
+
+models:
+  - name: stg_classic_models__customers
+    description: "Staged customers data from Classic Models source."
+    columns:
+      - name: customer_number
+        description: "Primary key."
+        tests:
+          - unique
+          - not_null
+      - name: sales_rep_employee_number
+        description: "Foreign key to employees."
+        tests:
+          - not_null:
+              config:
+                severity: warn
+          - relationships:
+              config:
+                severity: warn
+              arguments:
+                to: ref('stg_classic_models__employees')
+                field: employee_number
+
+  - name: stg_classic_models__employees
+    description: "Staged employees data from Classic Models source."
+    columns:
+      - name: employee_number
+        description: "Primary key."
+        tests:
+          - unique
+          - not_null
+      - name: office_code
+        description: "Foreign key to offices."
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_classic_models__offices')
+                field: office_code
+
+  - name: stg_classic_models__offices
+    description: "Staged offices data from Classic Models source."
+    columns:
+      - name: office_code
+        description: "Primary key."
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_classic_models__orders
+    description: "Staged orders data from Classic Models source."
+    columns:
+      - name: order_number
+        description: "Primary key."
+        tests:
+          - unique
+          - not_null
+      - name: customer_number
+        description: "Foreign key to customers."
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_classic_models__customers')
+                field: customer_number
+
+  - name: stg_classic_models__order_details
+    description: "Staged order details data from Classic Models source."
+    columns:
+      - name: order_line_number
+        description: "Part of composite primary key."

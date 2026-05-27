@@ -1,0 +1,51 @@
+version: 2
+
+models:
+  - name: int_orders
+    description: "Orders joined with customer information."
+    columns:
+      - name: order_number
+        description: "Primary key. Unique identifier for each order."
+        tests:
+          - unique
+          - not_null
+      - name: order_date
+        description: "Date the order was placed."
+      - name: required_date
+        description: "Date the order is required by."
+      - name: shipped_date
+        description: "Date the order was shipped."
+      - name: status
+        description: "Current status of the order."
+      - name: comments
+        description: "Additional comments on the order."
+      - name: customer_number
+        description: "Foreign key to customers."
+        tests:
+          - not_null
+      - name: customer_name
+        description: "Name of the customer company."
+      - name: customer_last_name
+        description: "Last name of the customer contact."
+      - name: customer_first_name
+        description: "First name of the customer contact."
+      - name: phone
+        description: "Customer phone number."
+      - name: address_line1
+        description: "Primary address line."
+      - name: address_line2
+        description: "Secondary address line."
+      - name: city
+        description: "Customer city."
+      - name: state
+        description: "Customer state."
+      - name: postal_code
+        description: "Customer postal code."
+      - name: country
+        description: "Customer country."
+      - name: sales_rep_employee_number
+        description: "Sales rep assigned to this customer."
+      - name: credit_limit
+        description: "Credit limit for the customer."
+      - name: customer_email
+        description: "Customer email address."

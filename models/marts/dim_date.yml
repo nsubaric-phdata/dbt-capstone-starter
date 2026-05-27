@@ -1,0 +1,18 @@
+version: 2
+
+models:
+  - name: dim_date
+    description: "Date dimension generated from a date spine."
+    columns:
+      - name: date_day
+        description: "Primary key. The date."
+      - name: date_year
+        description: "Year of the date."
+      - name: date_quarter
+        description: "Quarter of the date."
+      - name: date_month
+        description: "Month of the date."
+      - name: date_week
+        description: "Week of the year."
+      - name: date_day_of_month
+        description: "Day of the month."

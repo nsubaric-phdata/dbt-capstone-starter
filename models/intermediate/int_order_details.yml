@@ -1,0 +1,40 @@
+version: 2
+
+models:
+  - name: int_order_details
+    description: "Order details joined with product and product line information."
+    columns:
+      - name: order_number
+        description: "Foreign key to orders."
+        tests:
+          - not_null
+      - name: product_code
+        description: "Foreign key to products."
+        tests:
+          - not_null
+      - name: quantity_ordered
+        description: "Quantity of the product ordered."
+      - name: price_each
+        description: "Price per unit of the product."
+      - name: order_line_number
+        description: "Part of composite primary key."
+        tests:
+          - not_null
+      - name: product_name
+        description: "Name of the product."
+      - name: product_line
+        description: "Product line the product belongs to."
+      - name: product_scale
+        description: "Scale of the product model."
+      - name: product_vendor
+        description: "Vendor of the product."
+      - name: product_description
+        description: "Description of the product."
+      - name: quantity_in_stock
+        description: "Current quantity in stock."
+      - name: buy_price
+        description: "Buy price of the product."
+      - name: msrp
+        description: "Manufacturer suggested retail price."
+      - name: product_line_description
+        description: "Text description of the product line."
