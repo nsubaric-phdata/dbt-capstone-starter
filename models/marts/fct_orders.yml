@@ -1,0 +1,27 @@
+version: 2
+
+models:
+  - name: fct_orders
+    description: "Fact table for order line items."
+    columns:
+      - name: order_pk
+        description: "Surrogate primary key."
+        tests:
+          - unique
+          - not_null
+      - name: product_pk
+        description: "Foreign key to dim_products."
+        tests:
+          - not_null
+      - name: customer_pk
+        description: "Foreign key to dim_customers."
+        tests:
+          - not_null
+      - name: order_line_number
+        description: "Line number of the order detail."
+      - name: product_code
+        description: "Product code."
+      - name: quantity_ordered
+        description: "Quantity of the product ordered."
+      - name: price_each
+        description: "Price per unit of the product."

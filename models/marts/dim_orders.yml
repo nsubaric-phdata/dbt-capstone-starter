@@ -1,0 +1,23 @@
+version: 2
+
+models:
+  - name: dim_orders
+    description: "Order dimension table."
+    columns:
+      - name: order_pk
+        description: "Surrogate primary key."
+        tests:
+          - unique
+          - not_null
+      - name: order_number
+        description: "Natural key for the order."
+        tests:
+          - not_null
+      - name: required_date
+        description: "Date the order is required by."
+      - name: shipped_date
+        description: "Date the order was shipped."
+      - name: status
+        description: "Current status of the order."
+      - name: comments
+        description: "Additional comments on the order."

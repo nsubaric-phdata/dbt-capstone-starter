@@ -1,0 +1,25 @@
+version: 2
+
+models:
+  - name: dim_products
+    description: "Product dimension table."
+    columns:
+      - name: product_pk
+        description: "Surrogate primary key."
+        tests:
+          - unique
+          - not_null
+      - name: product_code
+        description: "Natural key for the product."
+        tests:
+          - not_null
+      - name: product_name
+        description: "Name of the product."
+      - name: product_line
+        description: "Product line the product belongs to."
+      - name: product_scale
+        description: "Scale of the product model."
+      - name: product_vendor
+        description: "Vendor of the product."
+      - name: product_description
+        description: "Description of the product."

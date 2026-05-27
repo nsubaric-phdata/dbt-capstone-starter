@@ -1,0 +1,16 @@
+version: 2
+
+models:
+  - name: fct_products
+    description: "Fact table for product inventory and pricing."
+    columns:
+      - name: product_pk
+        description: "Foreign key to dim_products."
+        tests:
+          - not_null
+      - name: quantity_in_stock
+        description: "Current quantity in stock."
+      - name: buy_price
+        description: "Buy price of the product."
+      - name: msrp
+        description: "Manufacturer suggested retail price."

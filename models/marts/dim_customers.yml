@@ -1,0 +1,39 @@
+version: 2
+
+models:
+  - name: dim_customers
+    description: "Customer dimension table."
+    columns:
+      - name: customer_pk
+        description: "Surrogate primary key."
+        tests:
+          - unique
+          - not_null
+      - name: customer_number
+        description: "Natural key for the customer."
+        tests:
+          - not_null
+      - name: customer_name
+        description: "Name of the customer company."
+      - name: customer_last_name
+        description: "Last name of the customer contact."
+      - name: customer_first_name
+        description: "First name of the customer contact."
+      - name: sales_rep_employee_number
+        description: "Sales rep assigned to this customer."
+      - name: credit_limit
+        description: "Credit limit for the customer."
+      - name: phone
+        description: "Customer phone number."
+      - name: address_line1
+        description: "Primary address line."
+      - name: address_line2
+        description: "Secondary address line."
+      - name: city
+        description: "Customer city."
+      - name: state
+        description: "Customer state."
+      - name: postal_code
+        description: "Customer postal code."
+      - name: country
+        description: "Customer country."

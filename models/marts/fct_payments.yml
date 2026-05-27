@@ -1,0 +1,18 @@
+version: 2
+
+models:
+  - name: fct_payments
+    description: "Fact table for customer payments."
+    columns:
+      - name: customer_pk
+        description: "Foreign key to dim_customers."
+        tests:
+          - not_null
+      - name: check_number
+        description: "Check number for the payment."
+        tests:
+          - not_null
+      - name: payment_date
+        description: "Date the payment was made."
+      - name: amount
+        description: "Amount of the payment."
