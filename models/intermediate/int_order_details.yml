@@ -1,0 +1,45 @@
+version: 2
+
+models:
+  - name: int_order_details
+    description: Order line items joined with order surrogate keys, order date, and a line total calculation.
+    config:
+      access: private
+    columns:
+      - name: order_detail_pk
+        description: Surrogate primary key for the order line item, generated from order_pk and order_line_number.
+        tests:
+          - unique
+          - not_null
+      - name: order_pk
+        description: Surrogate key for the parent order (FK to dim_orders).
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('int_orders')
+                field: order_pk
+      - name: product_pk
+        description: Surrogate key for the product (FK to dim_products / fct_products).
+        tests:
+          - not_null
+      - name: customer_pk
+        description: Surrogate key for the customer (FK to dim_customers).
+        tests:
+          - not_null
+      - name: order_line_number
+        description: Sequence number of this line item within the order.
+        tests:
+          - not_null
+      - name: product_code
+        description: Natural product code from the source system.
+      - name: quantity_ordered
+        description: Number of units ordered for this line item.
+      - name: price_each
+        description: Unit price at the time of order.
+      - name: line_total
+        description: Total value of this line item (quantity_ordered * price_each).
+      - name: order_date
+        description: Date the order was placed.
+      - name: sync_date
+        description: Timestamp when the record was last synced from the source system.

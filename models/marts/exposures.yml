@@ -1,0 +1,22 @@
+version: 2
+
+exposures:
+  - name: classic_models_order_reporting
+    label: Classic Models Order Reporting
+    type: dashboard
+    maturity: medium
+    description: >
+      Executive and operational reporting dashboard for Classic Car Components.
+      Covers order performance, revenue trends, customer activity, product inventory,
+      and payment history. Built on top of the Classic Models Snowflake schema data mart.
+    owner:
+      name: Nik Subaric
+      email: nsubaric@phdata.io
+    depends_on:
+      - ref('dim_customers')
+      - ref('dim_orders')
+      - ref('dim_products')
+      - ref('dim_date')
+      - ref('fct_orders')
+      - ref('fct_payments')
+      - ref('fct_products')

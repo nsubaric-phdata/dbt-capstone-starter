@@ -1,0 +1,41 @@
+version: 2
+
+models:
+  - name: dim_date
+    description: Date dimension spanning 2000-01-01 to 2030-12-31, generated from a dbt_utils date spine.
+    config:
+      contract:
+        enforced: true
+      access: public
+    columns:
+      - name: date_day
+        description: The calendar date. Primary key for this dimension.
+        data_type: date
+        tests:
+          - unique
+          - not_null
+      - name: date_year
+        description: Calendar year (e.g., 2024).
+        data_type: number
+        tests:
+          - not_null
+      - name: date_quarter
+        description: Quarter of the year (1-4).
+        data_type: number
+        tests:
+          - not_null
+      - name: date_month
+        description: Month of the year (1-12).
+        data_type: number
+        tests:
+          - not_null
+      - name: date_week
+        description: ISO week number of the year (1-53).
+        data_type: number
+        tests:
+          - not_null
+      - name: date_day_of_month
+        description: Day of the month (1-31).
+        data_type: number
+        tests:
+          - not_null

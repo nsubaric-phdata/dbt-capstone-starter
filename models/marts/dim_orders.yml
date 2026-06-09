@@ -1,0 +1,31 @@
+version: 2
+
+models:
+  - name: dim_orders
+    description: Order dimension containing order header attributes such as dates, status, and comments.
+    config:
+      contract:
+        enforced: true
+      access: public
+    columns:
+      - name: order_pk
+        description: Surrogate primary key for the order, generated from order_number.
+        data_type: varchar
+        tests:
+          - unique
+          - not_null
+      - name: order_date
+        description: Date the order was placed.
+        data_type: date
+      - name: required_date
+        description: Date by which the customer requires the order.
+        data_type: date
+      - name: shipped_date
+        description: Date the order was shipped. Null if not yet shipped.
+        data_type: date
+      - name: status
+        description: Current status of the order (e.g., Shipped, Cancelled, In Process).
+        data_type: varchar
+      - name: comments
+        description: Free-text comments associated with the order.
+        data_type: varchar

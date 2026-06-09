@@ -1,0 +1,253 @@
+version: 2
+
+models:
+  - name: stg_classic_models__customers
+    description: Staged customer records from the Classic Models source system.
+    config:
+      access: private
+    columns:
+      - name: customer_number
+        description: Unique identifier for the customer.
+        tests:
+          - unique
+          - not_null
+      - name: customer_name
+        description: Full company or customer name.
+      - name: customer_last_name
+        description: Customer last name.
+      - name: customer_first_name
+        description: Customer first name.
+      - name: phone
+        description: Customer phone number.
+      - name: address_line1
+        description: Primary address line.
+      - name: address_line2
+        description: Secondary address line.
+      - name: city
+        description: City of the customer address.
+      - name: state
+        description: State or province of the customer address.
+      - name: postal_code
+        description: Postal code of the customer address.
+      - name: country
+        description: Country of the customer address.
+      - name: sales_rep_employee_number
+        description: Foreign key to the employee who is the assigned sales rep.
+        tests:
+          - relationships:
+              arguments:
+                to: ref('stg_classic_models__employees')
+                field: employee_number
+      - name: credit_limit
+        description: Credit limit extended to the customer.
+      - name: sync_date
+        description: Timestamp when the record was last synced from the source system.
+
+  - name: stg_classic_models__employees
+    description: Staged employee records from the Classic Models source system.
+    config:
+      access: private
+    columns:
+      - name: employee_number
+        description: Unique identifier for the employee.
+        tests:
+          - unique
+          - not_null
+      - name: last_name
+        description: Employee last name.
+      - name: first_name
+        description: Employee first name.
+      - name: extension
+        description: Phone extension for the employee.
+      - name: email
+        description: Employee email address.
+      - name: office_code
+        description: Foreign key to the office where the employee works.
+        tests:
+          - relationships:
+              arguments:
+                to: ref('stg_classic_models__offices')
+                field: office_code
+      - name: reports_to
+        description: Employee number of the direct manager (self-referencing FK).
+      - name: job_title
+        description: Job title of the employee.
+      - name: sync_date
+        description: Timestamp when the record was last synced from the source system.
+
+  - name: stg_classic_models__offices
+    description: Staged office location records from the Classic Models source system.
+    config:
+      access: private
+    columns:
+      - name: office_code
+        description: Unique identifier for the office.
+        tests:
+          - unique
+          - not_null
+      - name: city
+        description: City where the office is located.
+      - name: phone
+        description: Office phone number.
+      - name: address_line1
+        description: Primary address line of the office.
+      - name: address_line2
+        description: Secondary address line of the office.
+      - name: state
+        description: State or province where the office is located.
+      - name: country
+        description: Country where the office is located.
+      - name: postal_code
+        description: Postal code of the office address.
+      - name: territory
+        description: Sales territory assigned to the office.
+      - name: sync_date
+        description: Timestamp when the record was last synced from the source system.
+
+  - name: stg_classic_models__order_details
+    description: Staged order line item records from the Classic Models source system.
+    config:
+      access: private
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - order_number
+              - order_line_number
+              - product_code
+    columns:
+      - name: order_number
+        description: Foreign key to the parent order.
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_classic_models__orders')
+                field: order_number
+      - name: product_code
+        description: Foreign key to the product ordered.
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_classic_models__products')
+                field: product_code
+      - name: quantity_ordered
+        description: Number of units ordered for this line item.
+      - name: price_each
+        description: Unit price for this product at the time of order.
+      - name: order_line_number
+        description: Sequence number of this line item within the order.
+        tests:
+          - not_null
+      - name: sync_date
+        description: Timestamp when the record was last synced from the source system.
+
+  - name: stg_classic_models__orders
+    description: Staged order header records from the Classic Models source system.
+    config:
+      access: private
+    columns:
+      - name: order_number
+        description: Unique identifier for the order.
+        tests:
+          - unique
+          - not_null
+      - name: order_date
+        description: Date the order was placed.
+      - name: required_date
+        description: Date by which the customer requires the order.
+      - name: shipped_date
+        description: Date the order was shipped.
+      - name: status
+        description: Current status of the order (e.g., Shipped, Cancelled, In Process).
+      - name: comments
+        description: Free-text comments associated with the order.
+      - name: customer_number
+        description: Foreign key to the customer who placed the order.
+        tests:
+          - relationships:
+              arguments:
+                to: ref('stg_classic_models__customers')
+                field: customer_number
+      - name: sync_date
+        description: Timestamp when the record was last synced from the source system.
+
+  - name: stg_classic_models__payments
+    description: Staged payment records from the Classic Models source system.
+    config:
+      access: private
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - customer_number
+              - check_number
+    columns:
+      - name: customer_number
+        description: Foreign key to the customer who made the payment.
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_classic_models__customers')
+                field: customer_number
+      - name: check_number
+        description: Check or payment reference number.
+        tests:
+          - not_null
+      - name: payment_date
+        description: Date the payment was made.
+      - name: amount
+        description: Payment amount.
+      - name: sync_date
+        description: Timestamp when the record was last synced from the source system.
+
+  - name: stg_classic_models__product_lines
+    description: Staged product line category records from the Classic Models source system.
+    config:
+      access: private
+    columns:
+      - name: product_line
+        description: Unique name of the product line category.
+        tests:
+          - unique
+          - not_null
+      - name: text_description
+        description: Plain text description of the product line.
+      - name: sync_date
+        description: Timestamp when the record was last synced from the source system.
+
+  - name: stg_classic_models__products
+    description: Staged product records from the Classic Models source system.
+    config:
+      access: private
+    columns:
+      - name: product_code
+        description: Unique identifier for the product.
+        tests:
+          - unique
+          - not_null
+      - name: product_name
+        description: Display name of the product.
+      - name: product_line
+        description: Foreign key to the product line category.
+        tests:
+          - relationships:
+              arguments:
+                to: ref('stg_classic_models__product_lines')
+                field: product_line
+      - name: product_scale
+        description: Scale of the model (e.g., 1:10, 1:18).
+      - name: product_vendor
+        description: Vendor who supplies the product.
+      - name: product_description
+        description: Detailed description of the product.
+      - name: quantity_in_stock
+        description: Current units in stock.
+      - name: buy_price
+        description: Wholesale cost to purchase the product.
+      - name: msrp
+        description: Manufacturer suggested retail price.
+      - name: sync_date
+        description: Timestamp when the record was last synced from the source system.

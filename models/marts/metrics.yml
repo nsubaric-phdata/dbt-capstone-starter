@@ -1,0 +1,50 @@
+metrics:
+  - name: total_revenue
+    label: Total Revenue
+    description: Total revenue generated from all order line items.
+    type: simple
+    type_params:
+      measure: total_revenue
+
+  - name: total_orders
+    label: Total Orders
+    description: Count of distinct orders placed.
+    type: count_distinct
+    type_params:
+      measure: order_line_count
+
+  - name: total_quantity_ordered
+    label: Total Quantity Ordered
+    description: Total number of product units ordered.
+    type: simple
+    type_params:
+      measure: total_quantity_ordered
+
+  - name: average_order_line_value
+    label: Average Order Line Value
+    description: Average revenue per order line item.
+    type: ratio
+    type_params:
+      numerator: total_revenue
+      denominator: order_line_count
+
+  - name: total_payment_amount
+    label: Total Payment Amount
+    description: Total amount received across all customer payments.
+    type: simple
+    type_params:
+      measure: total_payment_amount
+
+  - name: total_inventory_cost
+    label: Total Inventory Cost
+    description: Total wholesale cost of all products currently in stock.
+    type: simple
+    type_params:
+      measure: total_inventory_cost
+
+  - name: total_quantity_in_stock
+    label: Total Quantity In Stock
+    description: Total units currently in stock across all products.
+    type: simple
+    type_params:
+      measure: total_quantity_in_stock

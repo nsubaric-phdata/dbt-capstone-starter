@@ -1,0 +1,83 @@
+semantic_models:
+  - name: orders
+    description: Semantic model for order line item facts, enabling revenue and volume metrics over time.
+    model: ref('fct_orders')
+    defaults:
+      agg_time_dimension: order_date
+    entities:
+      - name: order_line
+        type: primary
+        expr: order_line_pk
+      - name: order
+        type: foreign
+        expr: order_pk
+      - name: customer
+        type: foreign
+        expr: customer_pk
+      - name: product
+        type: foreign
+        expr: product_pk
+    dimensions:
+      - name: order_date
+        type: time
+        type_params:
+          time_granularity: day
+      - name: product_code
+        type: categorical
+    measures:
+      - name: total_revenue
+        description: Sum of all order line totals.
+        agg: sum
+        expr: line_total
+      - name: total_quantity_ordered
+        description: Sum of units ordered across all line items.
+        agg: sum
+        expr: quantity_ordered
+      - name: order_line_count
+        description: Count of order line items.
+        agg: count
+        expr: order_line_pk
+
+  - name: payments
+    description: Semantic model for payment facts, enabling payment volume and amount metrics over time.
+    model: ref('fct_payments')
+    defaults:
+      agg_time_dimension: payment_date
+    entities:
+      - name: payment
+        type: primary
+        expr: payment_pk
+      - name: customer
+        type: foreign
+        expr: customer_pk
+    dimensions:
+      - name: payment_date
+        type: time
+        type_params:
+          time_granularity: day
+    measures:
+      - name: total_payment_amount
+        description: Sum of all payment amounts received.
+        agg: sum
+        expr: amount
+      - name: payment_count
+        description: Count of payments received.
+        agg: count
+        expr: payment_pk
+
+  - name: products
+    description: Semantic model for product inventory facts, enabling stock and pricing metrics.
+    model: ref('fct_products')
+    entities:
+      - name: product
+        type: primary
+        expr: product_pk
+    measures:
+      - name: total_quantity_in_stock
+        description: Sum of units currently in stock across all products.
+        agg: sum
+        expr: quantity_in_stock
+      - name: total_inventory_cost
+        description: Total wholesale cost of current inventory (quantity_in_stock * buy_price).
+        agg: sum
+        expr: quantity_in_stock * buy_price

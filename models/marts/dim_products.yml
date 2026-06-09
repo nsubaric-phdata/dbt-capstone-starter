@@ -1,0 +1,40 @@
+version: 2
+
+models:
+  - name: dim_products
+    description: Product dimension containing descriptive attributes for each product.
+    config:
+      contract:
+        enforced: true
+      access: public
+    columns:
+      - name: product_pk
+        description: Surrogate primary key for the product, generated from product_code.
+        data_type: varchar
+        tests:
+          - unique
+          - not_null
+      - name: product_code
+        description: Natural key for the product from the source system.
+        data_type: varchar
+        tests:
+          - unique
+          - not_null
+      - name: product_name
+        description: Display name of the product.
+        data_type: varchar
+      - name: product_line
+        description: Product line category the product belongs to.
+        data_type: varchar
+      - name: product_scale
+        description: Scale of the model (e.g., 1:10, 1:18).
+        data_type: varchar
+      - name: product_vendor
+        description: Vendor who supplies the product.
+        data_type: varchar
+      - name: product_description
+        description: Detailed description of the product.
+        data_type: varchar
+      - name: sync_date
+        description: Timestamp when the record was last synced from the source system.
+        data_type: timestamp_ltz

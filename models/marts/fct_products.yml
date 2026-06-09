@@ -1,0 +1,32 @@
+version: 2
+
+models:
+  - name: fct_products
+    description: Product inventory fact table capturing current stock levels and pricing for each product.
+    config:
+      contract:
+        enforced: true
+      access: public
+    columns:
+      - name: product_pk
+        description: Surrogate foreign key to dim_products.
+        data_type: varchar
+        tests:
+          - unique
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_products')
+                field: product_pk
+      - name: quantity_in_stock
+        description: Current units in stock.
+        data_type: number
+      - name: buy_price
+        description: Wholesale cost to purchase the product.
+        data_type: float
+      - name: msrp
+        description: Manufacturer suggested retail price.
+        data_type: float
+      - name: sync_date
+        description: Timestamp when the record was last synced from the source system.
+        data_type: timestamp_ltz
