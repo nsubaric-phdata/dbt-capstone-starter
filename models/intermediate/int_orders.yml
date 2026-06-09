@@ -2,14 +2,33 @@ version: 2
 
 models:
   - name: int_orders
+<<<<<<< HEAD
     description: "Orders joined with customer information."
     columns:
       - name: order_number
         description: "Primary key. Unique identifier for each order."
+=======
+    description: Orders joined with customer attributes, with surrogate keys generated for use across marts.
+    config:
+      access: private
+    columns:
+      - name: order_pk
+        description: Surrogate key for the order, generated from order_number.
+        tests:
+          - unique
+          - not_null
+      - name: customer_pk
+        description: Surrogate key for the customer, generated from customer_number.
+        tests:
+          - not_null
+      - name: order_number
+        description: Natural key for the order from the source system.
+>>>>>>> b6a361d16267bbf5459dd6a75e343e46385b0fa1
         tests:
           - unique
           - not_null
       - name: order_date
+<<<<<<< HEAD
         description: "Date the order was placed."
       - name: required_date
         description: "Date the order is required by."
@@ -49,3 +68,24 @@ models:
         description: "Credit limit for the customer."
       - name: customer_email
         description: "Customer email address."
+=======
+        description: Date the order was placed.
+      - name: required_date
+        description: Date by which the customer requires the order.
+      - name: shipped_date
+        description: Date the order was shipped.
+      - name: status
+        description: Current status of the order.
+      - name: comments
+        description: Free-text comments on the order.
+      - name: customer_number
+        description: Natural key for the customer from the source system.
+        tests:
+          - not_null
+      - name: customer_name
+        description: Full company or customer name, joined from the customer dimension.
+      - name: sales_rep_employee_number
+        description: Employee number of the assigned sales representative, joined from the customer dimension.
+      - name: sync_date
+        description: Timestamp when the record was last synced from the source system.
+>>>>>>> b6a361d16267bbf5459dd6a75e343e46385b0fa1

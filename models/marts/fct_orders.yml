@@ -2,6 +2,7 @@ version: 2
 
 models:
   - name: fct_orders
+<<<<<<< HEAD
     description: "Fact table for order line items."
     columns:
       - name: order_pk
@@ -25,3 +26,73 @@ models:
         description: "Quantity of the product ordered."
       - name: price_each
         description: "Price per unit of the product."
+=======
+    description: Order line item fact table at the order-product grain. Each row is one line item on an order.
+    config:
+      contract:
+        enforced: true
+      access: public
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - order_pk
+              - order_line_number
+    columns:
+      - name: order_line_pk
+        description: Surrogate primary key for the order line item, generated from order_pk and order_line_number.
+        data_type: varchar
+        tests:
+          - unique
+          - not_null
+      - name: order_pk
+        description: Surrogate foreign key to dim_orders.
+        data_type: varchar
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_orders')
+                field: order_pk
+      - name: product_pk
+        description: Surrogate foreign key to dim_products and fct_products.
+        data_type: varchar
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_products')
+                field: product_pk
+      - name: customer_pk
+        description: Surrogate foreign key to dim_customers.
+        data_type: varchar
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_customers')
+                field: customer_pk
+      - name: order_line_number
+        description: Sequence number of this line item within the order.
+        data_type: number
+        tests:
+          - not_null
+      - name: product_code
+        description: Natural product code from the source system.
+        data_type: varchar
+      - name: quantity_ordered
+        description: Number of units ordered for this line item.
+        data_type: number
+      - name: price_each
+        description: Unit price at the time of order.
+        data_type: float
+      - name: line_total
+        description: Total value of this line item (quantity_ordered * price_each).
+        data_type: float
+      - name: order_date
+        description: Date the order was placed.
+        data_type: date
+      - name: sync_date
+        description: Timestamp when the record was last synced from the source system.
+        data_type: timestamp_ltz
+>>>>>>> b6a361d16267bbf5459dd6a75e343e46385b0fa1

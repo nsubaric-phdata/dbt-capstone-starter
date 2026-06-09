@@ -35,8 +35,6 @@ sources:
             data_type: float
           - name: _sync_date
             data_type: timestamp_ltz
-          - name: customer_email
-            data_type: varchar
 
       - name: employees
         columns:

@@ -2,14 +2,27 @@ version: 2
 
 models:
   - name: dim_customers
+<<<<<<< HEAD
     description: "Customer dimension table."
     columns:
       - name: customer_pk
         description: "Surrogate primary key."
+=======
+    description: Customer dimension containing all customer attributes and their assigned sales representative.
+    config:
+      contract:
+        enforced: true
+      access: public
+    columns:
+      - name: customer_pk
+        description: Surrogate primary key for the customer, generated from customer_number.
+        data_type: varchar
+>>>>>>> b6a361d16267bbf5459dd6a75e343e46385b0fa1
         tests:
           - unique
           - not_null
       - name: customer_number
+<<<<<<< HEAD
         description: "Natural key for the customer."
         tests:
           - not_null
@@ -37,3 +50,49 @@ models:
         description: "Customer postal code."
       - name: country
         description: "Customer country."
+=======
+        description: Natural key for the customer from the source system.
+        data_type: number
+        tests:
+          - unique
+          - not_null
+      - name: customer_name
+        description: Full company or customer name.
+        data_type: varchar
+      - name: customer_last_name
+        description: Customer last name.
+        data_type: varchar
+      - name: customer_first_name
+        description: Customer first name.
+        data_type: varchar
+      - name: sales_rep_employee_number
+        description: Employee number of the assigned sales representative.
+        data_type: number
+      - name: credit_limit
+        description: Credit limit extended to the customer.
+        data_type: float
+      - name: phone
+        description: Customer phone number.
+        data_type: varchar
+      - name: address_line1
+        description: Primary address line.
+        data_type: varchar
+      - name: address_line2
+        description: Secondary address line.
+        data_type: varchar
+      - name: city
+        description: City of the customer address.
+        data_type: varchar
+      - name: state
+        description: State or province of the customer address.
+        data_type: varchar
+      - name: postal_code
+        description: Postal code of the customer address.
+        data_type: varchar
+      - name: country
+        description: Country of the customer address.
+        data_type: varchar
+      - name: sync_date
+        description: Timestamp when the record was last synced from the source system.
+        data_type: timestamp_ltz
+>>>>>>> b6a361d16267bbf5459dd6a75e343e46385b0fa1

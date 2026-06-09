@@ -2,14 +2,27 @@ version: 2
 
 models:
   - name: dim_products
+<<<<<<< HEAD
     description: "Product dimension table."
     columns:
       - name: product_pk
         description: "Surrogate primary key."
+=======
+    description: Product dimension containing descriptive attributes for each product.
+    config:
+      contract:
+        enforced: true
+      access: public
+    columns:
+      - name: product_pk
+        description: Surrogate primary key for the product, generated from product_code.
+        data_type: varchar
+>>>>>>> b6a361d16267bbf5459dd6a75e343e46385b0fa1
         tests:
           - unique
           - not_null
       - name: product_code
+<<<<<<< HEAD
         description: "Natural key for the product."
         tests:
           - not_null
@@ -23,3 +36,28 @@ models:
         description: "Vendor of the product."
       - name: product_description
         description: "Description of the product."
+=======
+        description: Natural key for the product from the source system.
+        data_type: varchar
+        tests:
+          - unique
+          - not_null
+      - name: product_name
+        description: Display name of the product.
+        data_type: varchar
+      - name: product_line
+        description: Product line category the product belongs to.
+        data_type: varchar
+      - name: product_scale
+        description: Scale of the model (e.g., 1:10, 1:18).
+        data_type: varchar
+      - name: product_vendor
+        description: Vendor who supplies the product.
+        data_type: varchar
+      - name: product_description
+        description: Detailed description of the product.
+        data_type: varchar
+      - name: sync_date
+        description: Timestamp when the record was last synced from the source system.
+        data_type: timestamp_ltz
+>>>>>>> b6a361d16267bbf5459dd6a75e343e46385b0fa1

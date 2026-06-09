@@ -2,6 +2,7 @@ version: 2
 
 models:
   - name: fct_payments
+<<<<<<< HEAD
     description: "Fact table for customer payments."
     columns:
       - name: customer_pk
@@ -16,3 +17,46 @@ models:
         description: "Date the payment was made."
       - name: amount
         description: "Amount of the payment."
+=======
+    description: Payment fact table recording each payment made by a customer.
+    config:
+      contract:
+        enforced: true
+      access: public
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - customer_pk
+              - check_number
+    columns:
+      - name: payment_pk
+        description: Surrogate primary key for the payment, generated from customer_number and check_number.
+        data_type: varchar
+        tests:
+          - unique
+          - not_null
+      - name: customer_pk
+        description: Surrogate foreign key to dim_customers.
+        data_type: varchar
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_customers')
+                field: customer_pk
+      - name: check_number
+        description: Check or payment reference number.
+        data_type: varchar
+        tests:
+          - not_null
+      - name: payment_date
+        description: Date the payment was made.
+        data_type: date
+      - name: amount
+        description: Payment amount.
+        data_type: float
+      - name: sync_date
+        description: Timestamp when the record was last synced from the source system.
+        data_type: timestamp_ltz
+>>>>>>> b6a361d16267bbf5459dd6a75e343e46385b0fa1
